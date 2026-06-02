@@ -1,7 +1,7 @@
 # Contributing
 
 ## Repo maintained by
-Praneeth — SSN College of Engineering / Spartan Aero Club
+Praneeth — SSN College of Engineering / HALO Aero Club
 
 ## How to contribute
 1. Fork the repo
@@ -18,7 +18,4 @@ Praneeth — SSN College of Engineering / Spartan Aero Club
 ## Issues
 Use GitHub Issues for bugs, questions, and feature requests.
 Tag issues with: `bug`, `enhancement`, `documentation`, `hardware`
-
-## Contact
-spartan.aero@ssn.edu.in
 
