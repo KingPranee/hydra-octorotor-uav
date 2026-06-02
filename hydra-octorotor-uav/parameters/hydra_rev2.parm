@@ -1,0 +1,91 @@
+# HYDRA Octorotor — ArduCopter Parameter File (Rev 2.0 Budget)
+# FC: Pixhawk 2.4.8 | Motors: SunnySky X4108S 380KV | Props: 13x4.5 CF
+# Frame: Flat Octa | AUW: ~7.2kg (no payload)
+# SSN College of Engineering | Spartan Aero Club
+
+# ── Frame Configuration ────────────────────────────────────
+FRAME_CLASS,3           # Octorotor
+FRAME_TYPE,12           # Flat octa X
+
+# ── ESC / Motor ───────────────────────────────────────────
+MOT_PWM_TYPE,0          # Normal PWM (BLHeli_S)
+MOT_PWM_MIN,1000
+MOT_PWM_MAX,2000
+MOT_SPIN_ARM,0.08
+MOT_SPIN_MIN,0.15
+MOT_SPIN_MAX,0.95
+MOT_THST_EXPO,0.60      # SunnySky expo
+MOT_THST_HOVER,0.38
+
+# ── Attitude Controller ───────────────────────────────────
+ATC_RAT_RLL_P,0.100
+ATC_RAT_RLL_I,0.100
+ATC_RAT_RLL_D,0.0036
+ATC_RAT_PIT_P,0.100
+ATC_RAT_PIT_I,0.100
+ATC_RAT_PIT_D,0.0036
+ATC_RAT_YAW_P,0.180
+ATC_RAT_YAW_I,0.018
+ATC_RAT_YAW_D,0.000
+ATC_ANG_RLL_P,4.500
+ATC_ANG_PIT_P,4.500
+ATC_ANG_YAW_P,4.500
+
+# ── Position / Navigation ─────────────────────────────────
+WPNAV_SPEED,400         # 4 m/s (conservative for budget build)
+WPNAV_SPEED_UP,150
+WPNAV_SPEED_DN,100
+WPNAV_ACCEL,100
+
+# ── EKF2 (Pixhawk 2.4.8 uses EKF2) ───────────────────────
+EK2_ENABLE,1
+EK2_GPS_TYPE,0
+EK2_ALT_SOURCE,0
+AHRS_EKF_TYPE,2
+
+# ── GPS (BN-220) ──────────────────────────────────────────
+GPS_TYPE,1              # Auto (NMEA → u-blox)
+SERIAL3_BAUD,38         # 38400 baud for BN-220
+SERIAL3_PROTOCOL,5      # GPS
+
+# ── Battery ───────────────────────────────────────────────
+BATT_MONITOR,4
+BATT_CAPACITY,32000     # 2×16000mAh
+BATT_LOW_VOLT,21.0
+BATT_CRT_VOLT,20.4
+BATT_FS_LOW_ACT,2
+
+# ── Arming ────────────────────────────────────────────────
+ARMING_CHECK,1
+ARMING_RUDDER,2
+BRD_SAFETYENABLE,1
+
+# ── Failsafe ──────────────────────────────────────────────
+FS_THR_ENABLE,1
+FS_THR_VALUE,975
+FS_GCS_ENABLE,2
+FS_CRASH_CHECK,1
+
+# ── RC Mapping ────────────────────────────────────────────
+RCMAP_THROTTLE,3
+RCMAP_ROLL,1
+RCMAP_PITCH,2
+RCMAP_YAW,4
+FLTMODE_CH,5
+
+# ── Flight Modes ──────────────────────────────────────────
+FLTMODE1,0              # Stabilize
+FLTMODE2,2              # AltHold
+FLTMODE3,5              # Loiter
+FLTMODE4,6              # RTL
+FLTMODE5,3              # Auto
+FLTMODE6,9              # Land
+
+# ── RTL ───────────────────────────────────────────────────
+RTL_ALT,2500
+RTL_LOIT_TIME,3000
+RTL_ALT_FINAL,0
+
+# ── Logging ───────────────────────────────────────────────
+LOG_BITMASK,65535
+LOG_DISARMED,0

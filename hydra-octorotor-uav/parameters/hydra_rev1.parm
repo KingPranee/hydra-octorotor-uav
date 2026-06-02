@@ -1,0 +1,118 @@
+# HYDRA Octorotor — ArduCopter Parameter File (Rev 1.0 Premium)
+# FC: Cube Orange+ | Motors: T-Motor MN5212 340KV | Props: 15x5 CF
+# Frame: Flat Octa | AUW: ~8.5kg (no payload)
+# SSN College of Engineering | Spartan Aero Club
+
+# ── Frame Configuration ────────────────────────────────────
+FRAME_CLASS,3           # Octorotor
+FRAME_TYPE,12           # Flat octa (X)
+
+# ── ESC / Motor ───────────────────────────────────────────
+MOT_PWM_TYPE,6          # DSHOT1200
+MOT_SPIN_ARM,0.07       # Min spin when armed
+MOT_SPIN_MIN,0.15       # Min throttle for stable flight
+MOT_SPIN_MAX,0.95
+MOT_THST_EXPO,0.65      # Expo for T-Motor MN5212
+MOT_THST_HOVER,0.35     # ~35% hover throttle (heavy lift)
+
+# ── Attitude Controller (Octo needs less aggressive P) ───
+ATC_RAT_RLL_P,0.090
+ATC_RAT_RLL_I,0.090
+ATC_RAT_RLL_D,0.004
+ATC_RAT_PIT_P,0.090
+ATC_RAT_PIT_I,0.090
+ATC_RAT_PIT_D,0.004
+ATC_RAT_YAW_P,0.180
+ATC_RAT_YAW_I,0.018
+ATC_RAT_YAW_D,0.000
+ATC_ANG_RLL_P,4.500
+ATC_ANG_PIT_P,4.500
+ATC_ANG_YAW_P,4.500
+
+# ── Position Controller ───────────────────────────────────
+WPNAV_SPEED,500         # 5 m/s horizontal
+WPNAV_SPEED_UP,200      # 2 m/s climb
+WPNAV_SPEED_DN,150      # 1.5 m/s descent
+WPNAV_ACCEL,150         # 1.5 m/s² accel (gentle for payload)
+WPNAV_ACCEL_Z,100
+
+# ── Loiter ────────────────────────────────────────────────
+LOIT_SPEED,500
+LOIT_ACC_MAX,200
+LOIT_BRK_ACCEL,150
+LOIT_BRK_JERK,250
+LOIT_BRK_DELAY,1.0
+
+# ── EKF2 ──────────────────────────────────────────────────
+EK2_ENABLE,1
+EK2_GPS_TYPE,0          # GPS + baro
+EK2_ALT_SOURCE,0        # Baro
+EK2_FLOW_DELAY,10
+
+# ── EKF3 (Cube Orange+ uses EKF3 by default) ─────────────
+EK3_ENABLE,1
+EK3_SRC1_POSXY,3        # GPS
+EK3_SRC1_VELXY,3        # GPS
+EK3_SRC1_POSZ,1         # Baro
+AHRS_EKF_TYPE,3
+
+# ── Compass (Here3+ CAN) ──────────────────────────────────
+COMPASS_USE,1
+COMPASS_USE2,1
+COMPASS_AUTODEC,1
+
+# ── GPS ───────────────────────────────────────────────────
+GPS_TYPE,9              # UAVCAN / DroneCAN (Here3+)
+GPS_AUTO_SWITCH,1
+
+# ── Battery Monitor ───────────────────────────────────────
+BATT_MONITOR,4          # Analog V+I
+BATT_CAPACITY,44000     # 2×22000mAh in parallel = 44Ah
+BATT_LOW_VOLT,21.0      # 3.5V/cell × 6S
+BATT_CRT_VOLT,20.4      # 3.4V/cell
+BATT_LOW_MAH,4000
+BATT_FS_LOW_ACT,2       # RTL on low battery
+BATT_FS_CRT_ACT,1       # Land on critical
+
+# ── Arming ────────────────────────────────────────────────
+ARMING_CHECK,1          # All checks
+ARMING_RUDDER,2         # Arm/disarm with rudder
+BRD_SAFETYENABLE,0      # Safety switch optional
+
+# ── Failsafe ──────────────────────────────────────────────
+FS_THR_ENABLE,1
+FS_THR_VALUE,975
+FS_GCS_ENABLE,2         # RTL on GCS loss
+FS_CRASH_CHECK,1
+FS_EKF_ACTION,2         # AltHold on EKF variance
+
+# ── RC Mapping ────────────────────────────────────────────
+RCMAP_THROTTLE,3
+RCMAP_ROLL,1
+RCMAP_PITCH,2
+RCMAP_YAW,4
+FLTMODE_CH,5
+
+# ── Flight Modes ──────────────────────────────────────────
+FLTMODE1,0              # Stabilize
+FLTMODE2,2              # AltHold
+FLTMODE3,5              # Loiter
+FLTMODE4,6              # RTL
+FLTMODE5,3              # Auto
+FLTMODE6,9              # Land
+
+# ── RTL ───────────────────────────────────────────────────
+RTL_ALT,3000            # Return at 30m
+RTL_LOIT_TIME,5000      # Loiter 5s over home before land
+RTL_ALT_FINAL,0         # Land at home
+
+# ── Notch Filter (motor noise for 15" props ~340KV @ 6S) ─
+INS_HNTCH_ENABLE,1
+INS_HNTCH_FREQ,55       # Hz — tune after first flight
+INS_HNTCH_BW,15
+INS_HNTCH_ATT,40
+INS_HNTCH_MODE,1        # Throttle-based
+
+# ── Logging ───────────────────────────────────────────────
+LOG_BITMASK,65535       # Log everything
+LOG_DISARMED,0
