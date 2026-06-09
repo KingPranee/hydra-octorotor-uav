@@ -1,0 +1,56 @@
+[Unit]
+Description=HYDRA v4 Dual-FC Companion Motor Controller
+Documentation=https://github.com/halo-aero-club/hydra
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/hydra_v4
+
+ExecStart=/usr/bin/python3 /home/pi/hydra_v4/hydra_companion_v4.py \
+    --sb-port      /dev/serial0 \
+    --sb-baud      57600 \
+    --px-port      /dev/serial1 \
+    --px-baud      57600 \
+    --threshold    500 \
+    --hysteresis   75 \
+    --hz           5 \
+    --dout         5 \
+    --sck          6 \
+    --dout2        23 \
+    --sck2         24 \
+    --scale        1.0 \
+    --scale2       1.0 \
+    --ate-fraction 0.35 \
+    --mhdd-post    0.75 \
+    --pid-kp       0.05 \
+    --pid-ki       0.02 \
+    --pid-kd       0.005 \
+    --pid-thr      1.0 \
+    --pid-dwell    2.0 \
+    --tlc-bump     0.08 \
+    --tlc-dur      0.5 \
+    --jerk-max     3.0 \
+    --att-limit    10.0 \
+    --att-diverge  5.0 \
+    --motor-stop-wait 2.0 \
+    --prom-port    9090 \
+    --blackbox     /home/pi/hydra_v4/blackbox.jsonl
+
+# Remove --dout2 / --sck2 lines above if not using second HX711
+# Add --grpc --grpc-port 50051 to enable gRPC server
+# Add --no-px if PixHawk monitoring UART is not connected
+# Add --fault-inject /home/pi/hydra_v4/fault_schedules/standard_bench_test.json for bench testing
+
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hydra_v4
+TimeoutStopSec=8
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,98 @@
+[
+  {
+    "_comment": "HYDRA v4 Fault Injection Schedule — Standard Bench Test",
+    "_comment2": "Run with: python3 hydra_companion_v4.py --fault-inject fault_schedules/standard_bench_test.json --no-px",
+    "at_s": 0,
+    "kind": "_meta",
+    "params": {
+      "description": "Standard payload-drop verification sequence",
+      "expected_transitions": 2,
+      "pass_criteria": "FSM reaches QUAD within 3s of each drop trigger, recovers to OCTO after recovery"
+    }
+  },
+  {
+    "_comment": "T=10s: Simulate slow gradual payload consumption (ATE should lock by T=35s)",
+    "at_s": 10.0,
+    "kind": "weight_drop",
+    "params": {
+      "target_g": 1200,
+      "note": "Still above threshold — ATE collecting baseline"
+    }
+  },
+  {
+    "_comment": "T=50s: Payload release — rapid drop below ATE threshold",
+    "at_s": 50.0,
+    "kind": "weight_drop",
+    "params": {
+      "target_g": 80,
+      "note": "Expect MHDD trigger → PRE_DROP → QUAD within 2s"
+    }
+  },
+  {
+    "_comment": "T=60s: Jerk spike during QUAD state — should NOT trigger re-enable",
+    "at_s": 60.0,
+    "kind": "jerk_spike",
+    "params": {
+      "magnitude_rad_s2": 8.0,
+      "duration_s": 0.3,
+      "note": "Jerk gate should block transition while spike is active"
+    }
+  },
+  {
+    "_comment": "T=75s: New payload loaded — weight recovers above upper band",
+    "at_s": 75.0,
+    "kind": "weight_drop",
+    "params": {
+      "target_g": 1400,
+      "note": "Expect QUAD→T_OCTO→OCTO transition"
+    }
+  },
+  {
+    "_comment": "T=90s: Second payload drop — verify repeat cycle",
+    "at_s": 90.0,
+    "kind": "weight_drop",
+    "params": {
+      "target_g": 50,
+      "note": "Second full OCTO→QUAD cycle"
+    }
+  },
+  {
+    "_comment": "T=110s: PixHawk heartbeat dropout — transitions should block",
+    "at_s": 110.0,
+    "kind": "hb_drop",
+    "params": {
+      "fc": "pixhawk",
+      "duration_s": 5.0,
+      "note": "PixHawk interlock should block any FSM transitions during dropout"
+    }
+  },
+  {
+    "_comment": "T=125s: Sensor failure — primary HX711 returns None",
+    "at_s": 125.0,
+    "kind": "sensor_fail",
+    "params": {
+      "sensor": "primary",
+      "duration_s": 8.0,
+      "note": "Arbitrator should fall back to secondary sensor"
+    }
+  },
+  {
+    "_comment": "T=140s: Both sensors fail — pipeline should return None, FSM should hold",
+    "at_s": 140.0,
+    "kind": "sensor_fail",
+    "params": {
+      "sensor": "both",
+      "duration_s": 4.0,
+      "note": "No FSM changes expected during total sensor blackout"
+    }
+  },
+  {
+    "_comment": "T=150s: Recovery — normal weight restored",
+    "at_s": 150.0,
+    "kind": "weight_drop",
+    "params": {
+      "target_g": 1300,
+      "note": "System should stabilise back to OCTO with fresh ATE baseline"
+    }
+  }
+]

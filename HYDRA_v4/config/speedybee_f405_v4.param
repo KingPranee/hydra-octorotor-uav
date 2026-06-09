@@ -1,0 +1,112 @@
+# ============================================================================
+#  HYDRA v4.0 — ArduPilot Parameter File
+#  Target FC:  SpeedyBee F405 Wing  (secondary / payload FC)
+#  Firmware:   ArduCopter 4.4.x+
+#  Changes from v3:
+#    - SCR_HEAP_SIZE raised to 200000 (UKF + ring buffers)
+#    - SCR_VM_I_COUNT raised to 50000
+#    - HYDRA_* sentinel params pre-declared (set to 0)
+#    - SR3_EXTRA1 raised to 20 Hz (ATTITUDE at 20 Hz for jerk gate)
+#    - SERVO_BLH_BDSHOT = 1 enables Bidirectional DSHOT → RPM feedback
+#      to ArduPilot, which Lua reads via esc_rpm:get_rpm(idx)
+# ============================================================================
+
+# ── Frame ────────────────────────────────────────────────────────────────────
+FRAME_CLASS,2
+FRAME_TYPE,0
+
+# ── Scripting ────────────────────────────────────────────────────────────────
+SCR_ENABLE,1
+SCR_HEAP_SIZE,200000
+SCR_VM_I_COUNT,50000
+
+# ── Serial ───────────────────────────────────────────────────────────────────
+SERIAL1_PROTOCOL,2
+SERIAL1_BAUD,57
+SERIAL2_PROTOCOL,28
+SERIAL2_BAUD,9
+SERIAL3_PROTOCOL,2
+SERIAL3_BAUD,57
+
+# ── Motor outputs ─────────────────────────────────────────────────────────────
+SERVO1_FUNCTION,33
+SERVO2_FUNCTION,34
+SERVO3_FUNCTION,35
+SERVO4_FUNCTION,36
+SERVO5_FUNCTION,37
+SERVO6_FUNCTION,38
+SERVO7_FUNCTION,39
+SERVO8_FUNCTION,40
+
+# ── ESC / Bidirectional DSHOT ─────────────────────────────────────────────────
+SERVO_BLH_BDSHOT,1
+SERVO_BLH_AUTO,1
+MOT_SPIN_MIN,0.15
+MOT_SPIN_ARM,0.10
+MOT_SPIN_MAX,0.95
+MOT_THST_EXPO,0.65
+
+# ── PWM output range ──────────────────────────────────────────────────────────
+SERVO5_MIN,1000
+SERVO5_MAX,2000
+SERVO5_TRIM,1000
+SERVO6_MIN,1000
+SERVO6_MAX,2000
+SERVO6_TRIM,1000
+SERVO7_MIN,1000
+SERVO7_MAX,2000
+SERVO7_TRIM,1000
+SERVO8_MIN,1000
+SERVO8_MAX,2000
+SERVO8_TRIM,1000
+
+# ── EKF ──────────────────────────────────────────────────────────────────────
+EK3_ENABLE,1
+EK2_ENABLE,0
+INS_ACCEL_FILTER,20
+INS_GYRO_FILTER,20
+
+# ── Battery monitor ───────────────────────────────────────────────────────────
+BATT_MONITOR,4
+BATT_VOLT_PIN,13
+BATT_CURR_PIN,12
+BATT_VOLT_MULT,11.0
+BATT_AMP_PERVLT,40.0
+
+# ── Telemetry rates to RPi (SERIAL3) ─────────────────────────────────────────
+SR3_POSITION,2
+SR3_RAW_SENS,5
+SR3_RC_CHAN,2
+SR3_EXTRA1,20
+SR3_EXTRA2,2
+SR3_EXTRA3,5
+
+# ── Safety ────────────────────────────────────────────────────────────────────
+FS_THR_ENABLE,1
+FS_THR_VALUE,975
+FS_GCS_ENABLE,1
+FS_GCS_TIMEOUT,5
+ARMING_CHECK,1
+BRD_SAFETY_DEFLT,0
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+LOG_BITMASK,176126
+LOG_DISARMED,0
+LOG_FILE_BUFSIZE,32
+
+# ── Hover throttle ────────────────────────────────────────────────────────────
+THR_MID,500
+THR_DZ,100
+RC_OVERRIDE_TIME,3
+DISARM_DELAY,10
+
+# ── HYDRA Sentinel params (Lua writes, Python reads) ──────────────────────────
+# These are declared here so ArduPilot accepts writes from the Lua script.
+# Values are overwritten in-flight. Units documented in comments.
+HYDRA_STATE,0      # FSM state code: 0=OCTO 1=PRE_DROP 2=T_QUAD 3=QUAD 4=T_OCTO 5=DEGR 6=EMER
+HYDRA_MASS,0       # UKF mass estimate (grams, integer)
+HYDRA_POST,0       # MHDD posterior × 1000 (integer, 0-1000)
+HYDRA_PID_I,0      # PID integral output × 1000
+HYDRA_VIBE,0       # Vibration EMA × 100 (integer)
+HYDRA_PX_HB,0      # PixHawk heartbeat timestamp (written by companion)
+HYDRA_M_DEGRADE,0  # Index of degrading primary motor (0 = none)

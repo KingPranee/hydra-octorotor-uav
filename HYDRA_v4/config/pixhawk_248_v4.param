@@ -1,0 +1,180 @@
+# ============================================================================
+#  HYDRA v4.0 — ArduPilot Parameter File
+#  Target FC:  PixHawk 2.4.8  (primary navigation FC)
+#  Firmware:   ArduCopter 4.4.x+
+#  Changes from v3:
+#    - SR1_EXTRA1 raised to 20 Hz (ATTITUDE streaming to companion)
+#    - SR1_RAW_SENS = 10 (VIBRATION + IMU at 10 Hz for vibe monitor)
+#    - Notch filter refined starting values for 1100mm octo, 16" props
+#    - Added ZIGZAG mission mode params for payload survey work
+#    - Added DO_SET_SERVO mission command support for payload trigger
+# ============================================================================
+
+# ── Frame ────────────────────────────────────────────────────────────────────
+FRAME_CLASS,2
+FRAME_TYPE,0
+
+# ── Serial ───────────────────────────────────────────────────────────────────
+SERIAL0_PROTOCOL,2
+SERIAL0_BAUD,115
+SERIAL1_PROTOCOL,2
+SERIAL1_BAUD,57
+SERIAL2_PROTOCOL,2
+SERIAL2_BAUD,57
+SERIAL3_PROTOCOL,5
+SERIAL3_BAUD,38
+
+# ── Motor outputs ─────────────────────────────────────────────────────────────
+SERVO1_FUNCTION,33
+SERVO2_FUNCTION,34
+SERVO3_FUNCTION,35
+SERVO4_FUNCTION,36
+SERVO5_FUNCTION,37
+SERVO6_FUNCTION,38
+SERVO7_FUNCTION,39
+SERVO8_FUNCTION,40
+SERVO_BLH_AUTO,1
+SERVO_BLH_BDSHOT,1
+MOT_SPIN_MIN,0.15
+MOT_SPIN_ARM,0.10
+MOT_SPIN_MAX,0.95
+MOT_THST_EXPO,0.65
+MOT_YAW_HEADROOM,200
+
+# ── EKF3 ─────────────────────────────────────────────────────────────────────
+EK3_ENABLE,1
+EK2_ENABLE,0
+EK3_GPS_TYPE,0
+EK3_ALT_SOURCE,0
+EK3_IMU_MASK,3
+INS_ACCEL_FILTER,20
+INS_GYRO_FILTER,20
+INS_USE,1
+INS_USE2,1
+
+# ── GPS ───────────────────────────────────────────────────────────────────────
+GPS_TYPE,1
+GPS_NAVFILTER,8
+GPS_HDOP_GOOD,200
+
+# ── Compass ───────────────────────────────────────────────────────────────────
+COMPASS_USE,1
+COMPASS_USE2,1
+COMPASS_AUTODEC,1
+COMPASS_EXTERN,1
+
+# ── RC ────────────────────────────────────────────────────────────────────────
+RSSI_TYPE,3
+RC_PROTOCOLS,512
+
+# ── Telemetry to RPi (SERIAL1) ────────────────────────────────────────────────
+SR1_POSITION,2
+SR1_RAW_SENS,10
+SR1_RC_CHAN,2
+SR1_EXTRA1,20
+SR1_EXTRA2,5
+SR1_EXTRA3,2
+SR1_ADSB,1
+
+# ── Telemetry to GCS (SERIAL2) ────────────────────────────────────────────────
+SR2_POSITION,2
+SR2_RAW_SENS,2
+SR2_RC_CHAN,2
+SR2_EXTRA1,5
+SR2_EXTRA2,2
+SR2_EXTRA3,2
+
+# ── Battery ───────────────────────────────────────────────────────────────────
+BATT_MONITOR,4
+BATT_VOLT_PIN,2
+BATT_CURR_PIN,3
+BATT_VOLT_MULT,10.1
+BATT_AMP_PERVLT,17.0
+BATT_LOW_VOLT,21.6
+BATT_CRT_VOLT,21.0
+BATT_LOW_MAH,500
+
+# ── Safety ────────────────────────────────────────────────────────────────────
+FS_THR_ENABLE,1
+FS_THR_VALUE,975
+FS_GCS_ENABLE,1
+FS_GCS_TIMEOUT,5
+FS_CRASH_CHECK,1
+FS_EKF_ACTION,2
+FS_EKF_THRESH,0.8
+ARMING_CHECK,1
+
+# ── Flight modes ──────────────────────────────────────────────────────────────
+FLTMODE1,0
+FLTMODE2,2
+FLTMODE3,5
+FLTMODE4,6
+FLTMODE5,3
+FLTMODE6,9
+
+# ── PID — starting point 1100mm octo, 16" props, ~4 kg AUW ──────────────────
+ATC_RAT_RLL_P,0.090
+ATC_RAT_RLL_I,0.090
+ATC_RAT_RLL_D,0.003
+ATC_RAT_RLL_FLTD,20
+ATC_RAT_RLL_FLTT,20
+ATC_RAT_PIT_P,0.090
+ATC_RAT_PIT_I,0.090
+ATC_RAT_PIT_D,0.003
+ATC_RAT_PIT_FLTD,20
+ATC_RAT_PIT_FLTT,20
+ATC_RAT_YAW_P,0.500
+ATC_RAT_YAW_I,0.050
+ATC_RAT_YAW_D,0.000
+ATC_ANG_RLL_P,6.0
+ATC_ANG_PIT_P,6.0
+ATC_ANG_YAW_P,6.0
+PSC_POSXY_P,1.0
+PSC_VELXY_P,2.0
+PSC_VELXY_I,1.0
+PSC_VELXY_D,0.5
+PSC_POSZ_P,1.0
+PSC_VELZ_P,5.0
+PSC_ACCZ_P,0.5
+PSC_ACCZ_I,1.0
+THR_MID,500
+THR_DZ,100
+
+# ── Notch filter (tune from FFT after maiden — these are starting values) ─────
+INS_HNTCH_ENABLE,1
+INS_HNTCH_FREQ,80
+INS_HNTCH_REF,0.25
+INS_HNTCH_ATT,40
+INS_HNTCH_BW,40
+INS_HNTCH_MODE,1
+
+# ── Navigation ────────────────────────────────────────────────────────────────
+WPNAV_SPEED,500
+WPNAV_ACCEL,200
+LAND_SPEED,50
+LAND_SPEED_HIGH,200
+RTL_ALT,3000
+RTL_LOIT_TIME,5000
+RTL_SPEED,500
+
+# ── Fence ─────────────────────────────────────────────────────────────────────
+FENCE_ENABLE,1
+FENCE_TYPE,3
+FENCE_ALT_MAX,100
+FENCE_RADIUS,200
+FENCE_ACTION,1
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+LOG_BITMASK,176126
+LOG_DISARMED,0
+LOG_FILE_BUFSIZE,64
+
+# ── Payload servo trigger (DO_SET_SERVO mission item) ─────────────────────────
+# AUX channel 9 = SERVO9 used for payload release mechanism if fitted
+SERVO9_FUNCTION,0
+SERVO9_MIN,1000
+SERVO9_MAX,2000
+SERVO9_TRIM,1000
+
+DISARM_DELAY,10
+NTF_LED_OVERRIDE,0

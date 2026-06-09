@@ -1,0 +1,20 @@
+# HYDRA v4 Python Dependencies
+# Install with: pip3 install -r requirements.txt --break-system-packages
+#
+# Core (required)
+dronekit>=2.9.2
+pymavlink>=2.4.40
+numpy>=1.24.0
+RPi.GPIO>=0.7.1
+hx711>=1.1.2.3
+
+# Ground tools (required for analysis scripts)
+matplotlib>=3.7.0
+
+# Monitoring (optional but recommended)
+grpcio>=1.54.0
+grpcio-tools>=1.54.0
+rich>=13.0.0         # live_monitor.py pretty output
+
+# Verification
+# (blackbox_verify.py uses stdlib only — no extra deps)
